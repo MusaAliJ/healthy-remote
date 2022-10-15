@@ -100,14 +100,14 @@ const Register = () => {
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
-            let data = {
-              name: "Abdul Rehman",
-              businessName: "Bus",
-              email: "salman@gmail.com",
-              password: "12",
-              userRole: "employer"
-            }
-            const { data } = await `${localHost}/a`
+            // let data = {
+            //   name: "Abdul Rehman",
+            //   businessName: "Bus",
+            //   email: "salman@gmail.com",
+            //   password: "12",
+            //   userRole: "employer"
+            // }
+            // const { data } = await `${localHost}/a`
             setLoading(true)
             console.log(values)
             // await dispatch(userRegisterAction(data));

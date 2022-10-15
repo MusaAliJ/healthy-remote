@@ -3,6 +3,7 @@ import morgan from "morgan"
 import cors from "cors"
 import { connect } from "./util/db"
 import companyRouter from "./company/companyRouter"
+import closeOnesRouter from "./closeOnes/closeOnesRouter"
 import { signup, signin, protect } from "./util/auth"
 
 export const app = express()
@@ -19,7 +20,7 @@ app.post("/signin", signin)
 
 app.use("/api", protect)
 app.use("/api/company", companyRouter)
-
+app.use("/api/close-one", closeOnesRouter)
 export const start = async () => {
   try {
     await connect()

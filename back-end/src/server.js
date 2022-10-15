@@ -4,7 +4,7 @@ import cors from "cors"
 import { connect } from "./util/db"
 import companyRouter from "./company/companyRouter"
 import taskRouter from "./task/taskRouter"
-import taskCategoryRouter from "./taskCategory/taskCategoryRouter"
+import taskCategoryRouter from "./taskCategory/taskCategoryRoutes"
 
 import { signup, signin, protect } from "./util/auth"
 

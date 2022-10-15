@@ -1,13 +1,26 @@
+import { Grid, withStyles } from "@material-ui/core"
 import React from "react"
-import Drawer from "../Drawer"
+import Drawer, { DrawerWidth } from "../Drawer"
 
-const LayoutHOC = ({ children }) => {
+const styles = (theme) => ({
+  container: {
+    backgroundColor: theme.custom.bgGrey,
+    padding: "12px 12px 0 12px",
+    minHeight: "100vh",
+    width: `calc(100vw - (${DrawerWidth}px + 32px))`
+  },
+  root: {
+    display: "flex"
+  }
+})
+
+const LayoutHOC = ({ classes, children }) => {
   return (
-    <div>
+    <Grid container direction="row-reverse" className={classes.root}>
       <Drawer />
-      {children}
-    </div>
+      <Grid className={classes.container}>{children}</Grid>
+    </Grid>
   )
 }
 
-export default LayoutHOC
+export default withStyles(styles)(LayoutHOC)

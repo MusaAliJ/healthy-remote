@@ -1,6 +1,6 @@
-import Companies from "screens/companies/Companies"
 import Login from "../auth/login/Login"
 import Register from "../auth/register/Register"
+import Companies from "screens/companies/Companies"
 
 export const routes = [
   {
@@ -29,7 +29,7 @@ export const routes = [
     title: "Companies",
     route: "/companies",
     auth_required: true,
-    component: <h1>Companies</h1>
+    component: <Companies />
   },
   {
     key: "employees",

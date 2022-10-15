@@ -23,7 +23,6 @@ import FamilyMemberIcon from "assets/icons/drawer/Family_Member_Active.png"
 import FamilyMemberInactiveIcon from "assets/icons/drawer/Family_Member_Inactive.png"
 import LogoutIcon from "assets/icons/drawer/Logout.png"
 import UserContext from "context/user/UserContext"
-import { Roles } from "./constant/constant"
 
 export const DrawerWidth = 240
 
@@ -101,7 +100,7 @@ function LayoutDrawer({ classes }) {
   const navigate = useNavigate()
   const userContext = useContext(UserContext)
   const location = useLocation()
-  const role = Roles[0].name
+  const role = userContext.getUserRole()
 
   const DrawerItems = [
     {

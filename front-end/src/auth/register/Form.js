@@ -112,7 +112,7 @@ const Register = () => {
             }
             const { data } = await axios.post(
               `${localHost}/signup`,
-              { apiData },
+              apiData,
               config
             )
             console.log(data)

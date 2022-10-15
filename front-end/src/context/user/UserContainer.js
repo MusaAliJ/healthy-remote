@@ -46,9 +46,9 @@ function UserContainer({ children }) {
   }
 
   function getUserRole() {
-    return "Emp"
+    return user?.user?.userRole
   }
-
+  console.log(getUserRole())
   return (
     <UserProvider
       value={{

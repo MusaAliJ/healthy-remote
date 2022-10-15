@@ -98,9 +98,10 @@ const styles = (theme) => ({
 
 function LayoutDrawer({ classes }) {
   const navigate = useNavigate()
-  const userContext = useContext(UserContext)
   const location = useLocation()
-  const role = userContext.getUserRole()
+  const userContext = useContext(UserContext)
+  const { getUserRole } = userContext
+  const role = getUserRole()
 
   const DrawerItems = [
     {

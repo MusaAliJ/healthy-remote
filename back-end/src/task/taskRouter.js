@@ -3,12 +3,12 @@ import controllers from "./taskController"
 
 const router = Router()
 
-router.route("/").get(controllers.getOne).post(controllers.createOne)
+router.route("/createTask").post(controllers.createOne)
 
-router
-  .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne)
+router.route("getTask/:id").get(controllers.getOne)
+
+router.route("updateTask/:id").put(controllers.updateOne)
+
+router.route("removeTask/:id").delete(controllers.removeOne)
 
 export default router

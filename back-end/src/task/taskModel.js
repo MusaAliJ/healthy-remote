@@ -20,8 +20,8 @@ const taskSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       red: "user"
     },
-    status: {
-      isDone: Boolean
+    isDone: {
+      type: Boolean
     },
     deadline: {
       type: String

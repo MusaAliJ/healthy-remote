@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import * as yup from "yup"
 import { makeStyles } from "@material-ui/core/styles"
-import { Button, CircularProgress, Typography } from "@material-ui/core"
+import {
+  Button,
+  CircularProgress,
+  MenuItem,
+  Typography
+} from "@material-ui/core"
 import { Visibility, VisibilityOff, Person } from "@material-ui/icons"
 import {
   InputAdornment,
   IconButton,
   OutlinedInput,
-  InputLabel
+  InputLabel,
+  Select
 } from "@material-ui/core"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import UserContext from "../../context/user/UserContext"
+import { localHost, Roles } from "../../constant/contant"
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -57,50 +65,65 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Register = () => {
-  //   const dispatch = useDispatch();
+  const classes = useStyles()
+  const navigate = useNavigate()
+  const userContext = useContext(UserContext)
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const [showPassword, setShowPassword] = useState(false)
   const [confirmShowPassword, setConfirmShowPassword] = useState(false)
-  //   const userLogin = useSelector((state: any) => state.userLogin);
-  //   const { userInfo } = userLogin;
 
-  //   const userRegister = useSelector((state: any) => state.userRegister);
-  //   const { error, loading } = userRegister;
-
-  //   const router = useHistory()
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
   const handleConfirmShowPassword = () => {
     setConfirmShowPassword((prev) => !prev)
   }
-  const classes = useStyles()
-  //   useEffect(() => {
-  //     if (userInfo && userInfo?.email) {
-  //       router.push("/orders-history");
-  //     }
-  //   }, [userInfo]);
+  useEffect(() => {
+    if (userContext.isAuthenticated()) {
+      navigate("/dashboard")
+    }
+  }, [userContext.user])
+
   return (
     <div>
       <Formik
         initialValues={{
-          firstName: "",
+          Name: "",
           email: "",
-
+          role: "",
+          businessName: "",
           password: "",
           confirmPassword: ""
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
+            // let data = {
+            //   name: "Abdul Rehman",
+            //   businessName: "Bus",
+            //   email: "salman@gmail.com",
+            //   password: "12",
+            //   userRole: "employer"
+            // }
+            // const { data } = await `${localHost}/a`
+            setLoading(true)
             console.log(values)
             // await dispatch(userRegisterAction(data));
             // resetForm({ values: "" });
+            setLoading(false)
+            setError("")
           } catch (error) {
             console.log(error)
+            setError(error)
+            setLoading(false)
           }
         }}
         validationSchema={yup.object({
-          firstName: yup.string().max(255).required("First Name is required"),
+          Name: yup.string().max(255).required("First Name is required"),
+          role: yup.string().max(255).required("Role is required"),
+          businessName: yup.string().optional(),
           email: yup
             .string()
             .email("Must be a valid email")
@@ -116,30 +139,23 @@ const Register = () => {
         {(formik) => {
           return (
             <Form onSubmit={formik.handleSubmit}>
-              <InputLabel className={classes.label} htmlFor="firstName">
-                <span>First Name</span>
+              <InputLabel className={classes.label} htmlFor="Name">
+                <span>Name</span>
               </InputLabel>
               <Field
                 as={OutlinedInput}
                 className={classes.input}
-                id="firstName"
-                name="firstName"
-                placeholder="Enter Your First Name"
-                value={formik.values.firstName}
+                id="Name"
+                name="Name"
+                placeholder="Enter Your Name"
+                value={formik.values.Name}
                 type="text"
-                label="firstName"
+                label="Name"
                 onChange={formik.handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <Person />
-                    </IconButton>
-                  </InputAdornment>
-                }
                 aria-describedby="standard-weight-helper-text"
               />
               <ErrorMessage
-                name="firstName"
+                name="Name"
                 render={(msg) => {
                   return (
                     <span style={{ color: "red", display: "block" }}>
@@ -162,17 +178,70 @@ const Register = () => {
                 type="email"
                 label="email"
                 onChange={formik.handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <Person />
-                    </IconButton>
-                  </InputAdornment>
-                }
                 aria-describedby="standard-weight-helper-text"
               />
               <ErrorMessage
                 name="email"
+                render={(msg) => {
+                  return (
+                    <span style={{ color: "red", display: "block" }}>
+                      {msg}
+                    </span>
+                  )
+                }}
+              />
+
+              <InputLabel className={classes.label} htmlFor="role">
+                <span>Role</span>
+              </InputLabel>
+              <Field
+                as={Select}
+                className={classes.input}
+                variant="outlined"
+                id="role"
+                name="role"
+                value={formik.values.role}
+                label="Role"
+                type="select"
+                onChange={formik.handleChange}
+                aria-describedby="standard-weight-helper-text"
+              >
+                {Roles.map((role) => {
+                  return (
+                    <MenuItem key={role.value} value={role.value}>
+                      {role.name}
+                    </MenuItem>
+                  )
+                })}
+              </Field>
+              <ErrorMessage
+                name="role"
+                render={(msg) => {
+                  return (
+                    <span style={{ color: "red", display: "block" }}>
+                      {msg}
+                    </span>
+                  )
+                }}
+              />
+
+              <InputLabel className={classes.label} htmlFor="businessName">
+                <span>Business Name</span>
+              </InputLabel>
+              <Field
+                as={OutlinedInput}
+                className={classes.input}
+                id="businessName"
+                name="businessName"
+                placeholder="Enter Your Business Name"
+                value={formik.values.businessName}
+                type="text"
+                label="businessName"
+                onChange={formik.handleChange}
+                aria-describedby="standard-weight-helper-text"
+              />
+              <ErrorMessage
+                name="businessName"
                 render={(msg) => {
                   return (
                     <span style={{ color: "red", display: "block" }}>
@@ -234,7 +303,6 @@ const Register = () => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      // onClick={()=>console.log("onClick")}
                       onMouseDown={handleConfirmShowPassword}
                     >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -242,9 +310,6 @@ const Register = () => {
                   </InputAdornment>
                 }
                 aria-describedby="standard-weight-helper-text"
-                // inputProps={{
-                // 'aria-label': 'weight',
-                // }}
               />
               <ErrorMessage
                 name="confirmPassword"
@@ -256,9 +321,9 @@ const Register = () => {
                   )
                 }}
               />
-              {/* <div style={{ color: "red", display: "block" }}>
+              <div style={{ color: "red", display: "block" }}>
                 {error && error}
-              </div> */}
+              </div>
               <div className={classes.footer}>
                 <Typography paragraph className={classes.para}>
                   Already have an account ?{" "}
@@ -267,20 +332,22 @@ const Register = () => {
                   </Link>
                 </Typography>
                 <div className={classes.buttonDiv}>
-                  <Button
-                    classes={{
-                      root: classes.button,
-                      label: classes.buttonLabel
-                    }}
-                    color="primary"
-                    variant="contained"
-                    fullWidth
-                    type={"submit"}
-                    // type={loading ? "button" : "submit"}
-                  >
-                    {/* {loading ? <CircularProgress /> : "SignUp"} */}
-                    SignUp
-                  </Button>
+                  {loading ? (
+                    <CircularProgress />
+                  ) : (
+                    <Button
+                      classes={{
+                        root: classes.button,
+                        label: classes.buttonLabel
+                      }}
+                      color="primary"
+                      variant="contained"
+                      fullWidth
+                      type={"submit"}
+                    >
+                      Register
+                    </Button>
+                  )}
                 </div>
               </div>
             </Form>

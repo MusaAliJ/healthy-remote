@@ -40,7 +40,7 @@ const SignUp = () => {
     <div className={classes.container}>
       <div className={classes.formContainer}>
         <Typography variant="body2" component="h3" className={classes.heading}>
-          User Sign up
+          Register
         </Typography>
         <Register />
       </div>

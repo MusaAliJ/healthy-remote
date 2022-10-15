@@ -7,12 +7,14 @@ const Router = () => {
   return (
     <Routes>
       {routes.map((route) => {
-        return (
+        return route.auth_required ? (
           <Route
             path={route.route}
             element={<PrivateRoute component={route.component} />}
             key={route.key}
           />
+        ) : (
+          <Route path={route.route} element={route.component} key={route.key} />
         )
       })}
     </Routes>

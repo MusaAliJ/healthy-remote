@@ -7,7 +7,7 @@ router.route("/createCompany").post(controllers.createOne)
 
 router.route("/getCompany/:id").get(controllers.getOne)
 
-router.route("/updateCategory").put(controllers.updateOne)
-router.route("/deleteCategory").delete(controllers.removeOne)
+router.route("/updateCompany").put(controllers.updateOne)
+router.route("/deleteCompany").delete(controllers.removeOne)
 
 export default router

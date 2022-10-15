@@ -3,7 +3,7 @@ import controllers from "./taskCategoryController"
 
 const router = Router()
 
-router.route("/").get(controllers.getOne).post(controllers.createOne)
+router.route("/").get(controllers.getMany).post(controllers.createOne)
 
 router
   .route("/:id")

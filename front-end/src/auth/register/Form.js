@@ -18,7 +18,8 @@ import {
 } from "@material-ui/core"
 import { Link, useNavigate } from "react-router-dom"
 import UserContext from "../../context/user/UserContext"
-import { localHost, Roles } from "../../constant/contant"
+import { config, localHost, Roles } from "../../constant/constant"
+import axios from "axios"
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -91,27 +92,32 @@ const Register = () => {
     <div>
       <Formik
         initialValues={{
-          Name: "",
-          email: "",
+          Name: "salman",
+          email: "salman@gmail.com",
           role: "",
-          businessName: "",
-          password: "",
-          confirmPassword: ""
+          businessName: "bus",
+          password: "123",
+          confirmPassword: "123"
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
-            // let data = {
-            //   name: "Abdul Rehman",
-            //   businessName: "Bus",
-            //   email: "salman@gmail.com",
-            //   password: "12",
-            //   userRole: "employer"
-            // }
-            // const { data } = await `${localHost}/a`
             setLoading(true)
             console.log(values)
-            // await dispatch(userRegisterAction(data));
-            // resetForm({ values: "" });
+            let apiData = {
+              name: values.Name,
+              businessName: values.businessName,
+              email: values.email,
+              password: values.password,
+              userRole: values.role
+            }
+            const { data } = await axios.post(
+              `${localHost}/signup`,
+              { apiData },
+              config
+            )
+            console.log(data)
+            userContext.updatedUser(data)
+            resetForm({ values: "" })
             setLoading(false)
             setError("")
           } catch (error) {

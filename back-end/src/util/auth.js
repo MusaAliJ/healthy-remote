@@ -3,7 +3,6 @@ import { User } from "../user/userModel"
 import jwt from "jsonwebtoken"
 
 export const newToken = (user) => {
-  console.log(user.id)
   return jwt.sign({ id: user.id }, config.secrets.jwt, {
     expiresIn: "24h"
   })
@@ -23,14 +22,10 @@ export const signup = async (req, res) => {
   }
 
   try {
-    console.log("in-try")
-    console.log(req.body)
     const user = await User.create(req.body)
-    console.log(user, "sdsadsdsadsaddas")
     const token = newToken(user)
     return res.status(201).send({ token, user })
   } catch (e) {
-    console.log(e)
     return res.status(500).end()
   }
 }

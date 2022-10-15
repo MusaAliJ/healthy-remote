@@ -5,7 +5,7 @@ import { connect } from "./util/db"
 import companyRouter from "./company/companyRouter"
 import closeOnesRouter from "./closeOnes/closeOnesRoute"
 import taskRouter from "./task/taskRouter"
-import taskCategoryRouter from "./taskCategory/taskCategoryRouter"
+import taskCategoryRouter from "./taskCategory/taskCategoryRoutes"
 
 import { signup, signin, protect } from "./util/auth"
 

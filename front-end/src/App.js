@@ -1,7 +1,16 @@
+import { BrowserRouter } from "react-router-dom"
+import Router from "./router/Router"
+import { ThemeMaker } from "./styles/ThemeMaker"
 import "./App.css"
 
 function App() {
-  return <div className="App">hello</div>
+  return (
+    <BrowserRouter>
+      <ThemeMaker>
+        <Router />
+      </ThemeMaker>
+    </BrowserRouter>
+  )
 }
 
 export default App

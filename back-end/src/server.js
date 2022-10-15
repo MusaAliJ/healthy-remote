@@ -24,7 +24,7 @@ export const start = async () => {
   try {
     await connect()
     app.listen(PORT, () => {
-      console.log(`REST API on http://localhost:${PORT}/api`)
+      console.log(`REST API on http://localhost:${PORT}`)
     })
   } catch (e) {
     console.error(e)

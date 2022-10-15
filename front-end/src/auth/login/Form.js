@@ -12,6 +12,9 @@ import {
   InputLabel
 } from "@material-ui/core"
 import UserContext from "../../context/user/UserContext"
+import { localHost, Roles } from "../../constant/constant"
+import axios from "axios"
+import { config } from "constant/constant"
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -84,11 +87,15 @@ const LoginForm = () => {
         onSubmit={async (values, { resetForm }) => {
           try {
             setLoading(true)
-            console.log(values)
-            // await dispatch(userRegisterAction(data));
-            // resetForm({ values: "" });
+            const { data } = await axios.post(
+              `${localHost}/signin`,
+              values,
+              config
+            )
+            userContext.updatedUser(data)
             setLoading(false)
             setError("")
+            resetForm({ values: "" })
           } catch (error) {
             console.log(error)
             setError(error)

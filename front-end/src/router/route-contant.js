@@ -1,3 +1,4 @@
+import Companies from "screens/companies/Companies"
 import Login from "../auth/login/Login"
 import Register from "../auth/register/Register"
 
@@ -15,7 +16,7 @@ export const routes = [
     route: "/register",
     auth_required: false,
     component: <Register />
-  }
+  },
   // {
   //   key: "dashboard",
   //   title: "Dashboard",
@@ -23,13 +24,13 @@ export const routes = [
   //   auth_required: true,
   //   component: <Dashboard />
   // },
-  // {
-  //   key: "companies",
-  //   title: "Companies",
-  //   route: "/companies",
-  //   auth_required: true,
-  //   component: <Companies />
-  // },
+  {
+    key: "companies",
+    title: "Companies",
+    route: "/companies",
+    auth_required: true,
+    component: <Companies />
+  }
   // {
   //   key: "employees",
   //   title: "Employees",

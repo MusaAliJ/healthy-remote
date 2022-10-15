@@ -15,7 +15,7 @@ import customBlack from "./styles/color/customBlack"
 // import userContext from "context/userContext"
 import { UserAccessControlList } from "./RoleBasedAccessList"
 // import { keys, removeFromStorage } from "utils/localStorage"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 import DashboardIcon from "assets/icons/drawer/Dashboard_Active.png"
 import DashboardInactiveIcon from "assets/icons/drawer/Dashboard_Inactive.png"
@@ -98,7 +98,7 @@ const styles = (theme) => ({
 
 function LayoutDrawer({ classes }) {
   const navigate = useNavigate()
-  // const location = useLocation()
+  const location = useLocation()
   // const { getUserRole } = useContext(userContext)
   // const role = getUserRole()
   const role = "Owner"
@@ -143,10 +143,9 @@ function LayoutDrawer({ classes }) {
   // }
 
   function isSelected(route) {
-    return true
-    // return route !== "/"
-    //   ? location.pathname.includes(route)
-    //   : location.pathname === route
+    return route !== "/"
+      ? location.pathname.includes(route)
+      : location.pathname === route
   }
 
   let filteredIconsList = []

@@ -26,4 +26,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export const User = mongoose.model("closeOnes", userSchema)
+export const closeOneModel = mongoose.model("closeOnes", userSchema)

@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom"
 
 import DashboardIcon from "assets/icons/drawer/Dashboard_Active.png"
 import DashboardInactiveIcon from "assets/icons/drawer/Dashboard_Inactive.png"
+import CompaniesIcon from "assets/icons/drawer/Companies_Active.png"
+import CompaniesInactiveIcon from "assets/icons/drawer/Companies_Inactive.png"
 import EmployeesIcon from "assets/icons/drawer/Employees_Active.png"
 import EmployeesInactiveIcon from "assets/icons/drawer/Employees_Inactive.png"
 import FamilyMemberIcon from "assets/icons/drawer/Family_Member_Active.png"
@@ -108,6 +110,12 @@ function LayoutDrawer({ classes }) {
       route: "/dashboard",
       icon: DashboardIcon,
       inActiveIcon: DashboardInactiveIcon
+    },
+    {
+      title: "Companies",
+      route: "/companies",
+      icon: CompaniesIcon,
+      inActiveIcon: CompaniesInactiveIcon
     },
     {
       title: "Employees",

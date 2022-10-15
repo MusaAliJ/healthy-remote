@@ -1,4 +1,4 @@
-const OwnerAccessList = ["/dashboard", "/employees"]
+const OwnerAccessList = ["/dashboard", "/companies", "/employees"]
 
 const EmployeeAccessList = ["/dashboard", "/family-members"]
 

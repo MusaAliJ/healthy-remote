@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
     const user = await User.create(req.body)
     console.log(user, "sdsadsdsadsaddas")
     const token = newToken(user)
-    return res.status(201).send({ token })
+    return res.status(201).send({ token, user })
   } catch (e) {
     console.log(e)
     return res.status(500).end()
@@ -58,7 +58,7 @@ export const signin = async (req, res) => {
     }
 
     const token = newToken(user)
-    return res.status(201).send({ token })
+    return res.status(201).send({ token, user })
   } catch (e) {
     console.error(e)
     res.status(500).end()

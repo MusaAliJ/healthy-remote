@@ -3,12 +3,11 @@ import controllers from "./companyController"
 
 const router = Router()
 
-router.route("/").get(controllers.getOne).post(controllers.createOne)
+router.route("/createCompany").post(controllers.createOne)
 
-router
-  .route("/:id")
-  .get(controllers.getOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne)
+router.route("/getCompany/:id").get(controllers.getOne)
+
+router.route("/updateCategory").put(controllers.updateOne)
+router.route("/deleteCategory").delete(controllers.removeOne)
 
 export default router

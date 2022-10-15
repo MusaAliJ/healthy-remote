@@ -9,6 +9,8 @@ const taskSchema = new mongoose.Schema(
       maxlength: 50
     },
     description: String,
+    company: { type: mongoose.SchemaTypes.ObjectId, ref: "company" },
+    category: { type: mongoose.SchemaTypes.ObjectId, ref: "tastCategory" },
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "user",

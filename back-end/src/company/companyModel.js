@@ -8,8 +8,7 @@ const companySchema = new mongoose.Schema(
       trim: true,
       maxlength: 50
     },
-    description: String,
-    createdBy: {
+    owner: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "user",
       required: true

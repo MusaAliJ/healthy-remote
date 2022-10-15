@@ -4,10 +4,6 @@ const taskCategorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-  },
-  tasks: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    red: "user"
   }
 })
 

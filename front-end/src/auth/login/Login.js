@@ -40,7 +40,7 @@ const Login = () => {
     <div className={classes.container}>
       <div className={classes.formContainer}>
         <Typography variant="body2" component="h3" className={classes.heading}>
-          User Sign in
+          Login
         </Typography>
         <LoginForm />
       </div>

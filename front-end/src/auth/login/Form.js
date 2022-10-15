@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import * as yup from "yup"
 import { makeStyles } from "@material-ui/core/styles"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button, CircularProgress, Typography } from "@material-ui/core"
 import { Visibility, VisibilityOff, Person } from "@material-ui/icons"
 import {
@@ -11,7 +11,10 @@ import {
   OutlinedInput,
   InputLabel
 } from "@material-ui/core"
-import { useHistory } from "react-router"
+import UserContext from "../../context/user/UserContext"
+import { localHost, Roles } from "../../constant/constant"
+import axios from "axios"
+import { config } from "constant/constant"
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -22,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: theme.palette.primary.main
     },
-    width: "fit-content"
+    width: "fit-content",
+    color: "white"
   },
   buttonDiv: {
     width: "fit-content",
@@ -55,18 +59,24 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginForm = () => {
+  const classes = useStyles()
+  const navigate = useNavigate()
+  const userContext = useContext(UserContext)
   const [showPassword, setShowPassword] = useState(false)
-  //   const router = useHistory()
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
   }
-  const classes = useStyles()
-  //   useEffect(() => {
-  //     if (userInfo && userInfo?.email) {
-  //       router.push("/dashboard")
-  //     }
-  //   }, [userInfo])
+
+  useEffect(() => {
+    if (userContext.isAuthenticated()) {
+      navigate("/dashboard")
+    }
+  }, [userContext.user])
+
   return (
     <div>
       <Formik
@@ -76,11 +86,20 @@ const LoginForm = () => {
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
-            console.log({ values })
-            // await dispatch(userLoginAction(values.email, values.password))
-            // resetForm({ values: "" })
+            setLoading(true)
+            const { data } = await axios.post(
+              `${localHost}/signin`,
+              values,
+              config
+            )
+            userContext.updatedUser(data)
+            setLoading(false)
+            setError("")
+            resetForm({ values: "" })
           } catch (error) {
             console.log(error)
+            setError(error)
+            setLoading(false)
           }
         }}
         validationSchema={yup.object({
@@ -107,21 +126,7 @@ const LoginForm = () => {
                 type="email"
                 label="email"
                 onChange={formik.handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                    // aria-label="toggle password visibility"
-                    // onClick={()=>console.log("onClick")}
-                    // onMouseDown={handleShowPassword}
-                    >
-                      <Person />
-                    </IconButton>
-                  </InputAdornment>
-                }
                 aria-describedby="standard-weight-helper-text"
-                // inputProps={{
-                // 'aria-label': 'weight',
-                // }}
               />
               <ErrorMessage
                 name="email"
@@ -158,9 +163,6 @@ const LoginForm = () => {
                   </InputAdornment>
                 }
                 aria-describedby="standard-weight-helper-text"
-                // inputProps={{
-                // 'aria-label': 'weight',
-                // }}
               />
               <ErrorMessage
                 name="password"
@@ -172,33 +174,36 @@ const LoginForm = () => {
                   )
                 }}
               />
-
+              <div style={{ color: "red", display: "block" }}>
+                {error && error}
+              </div>
               <div className={classes.footer}>
                 <div>
                   <Typography paragraph className={classes.para}>
                     Don't have an account ?{" "}
                     <Link to="/register" className={classes.link}>
-                      Signup
+                      Register
                     </Link>
                   </Typography>
                 </div>
 
                 <div className={classes.buttonDiv}>
-                  <Button
-                    classes={{
-                      root: classes.button,
-                      label: classes.buttonLabel
-                    }}
-                    color="primary"
-                    variant="contained"
-                    fullWidth
-                    type={"submit"}
-
-                    // type={loading ? "button" : "submit"}
-                  >
-                    Signin
-                    {/* {loading ? <CircularProgress /> : "Signin"} */}
-                  </Button>
+                  {loading ? (
+                    <CircularProgress />
+                  ) : (
+                    <Button
+                      classes={{
+                        root: classes.button,
+                        label: classes.buttonLabel
+                      }}
+                      color="primary"
+                      variant="contained"
+                      fullWidth
+                      type={"submit"}
+                    >
+                      Login
+                    </Button>
+                  )}
                 </div>
               </div>
             </Form>

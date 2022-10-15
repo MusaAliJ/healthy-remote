@@ -17,32 +17,32 @@ export const routes = [
     auth_required: false,
     component: <Register />
   },
-  // {
-  //   key: "dashboard",
-  //   title: "Dashboard",
-  //   route: "/dashboard",
-  //   auth_required: true,
-  //   component: <Dashboard />
-  // },
+  {
+    key: "dashboard",
+    title: "Dashboard",
+    route: "/dashboard",
+    auth_required: true,
+    component: <h1>Dashboard</h1>
+  },
   {
     key: "companies",
     title: "Companies",
     route: "/companies",
     auth_required: true,
-    component: <Companies />
+    component: <h1>Companies</h1>
+  },
+  {
+    key: "employees",
+    title: "Employees",
+    route: "/employees",
+    auth_required: true,
+    component: <h1>Employees</h1>
+  },
+  {
+    key: "family-members",
+    title: "Family Members",
+    route: "/family-members",
+    auth_required: true,
+    component: <h1>FamilyMembers</h1>
   }
-  // {
-  //   key: "employees",
-  //   title: "Employees",
-  //   route: "/employees",
-  //   auth_required: true,
-  //   component: <Employees />
-  // },
-  // {
-  //   key: "family-members",
-  //   title: "Family Members",
-  //   route: "/family-members",
-  //   auth_required: true,
-  //   component: <FamilyMembers />
-  // }
 ]

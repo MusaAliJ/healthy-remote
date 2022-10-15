@@ -10,13 +10,9 @@ import {
   Tooltip
 } from "@material-ui/core"
 import customBlack from "./styles/color/customBlack"
-// import SimpleDialog from "common/SimpleDialog"
-// import CommonSnackBar from "common/CommonSnackBar"
-// import userContext from "context/userContext"
-import { UserAccessControlList } from "./RoleBasedAccessList"
-// import { keys, removeFromStorage } from "utils/localStorage"
-import { useNavigate, useLocation } from "react-router-dom"
 
+import { UserAccessControlList } from "./RoleBasedAccessList"
+import { useLocation, useNavigate } from "react-router-dom"
 import DashboardIcon from "assets/icons/drawer/Dashboard_Active.png"
 import DashboardInactiveIcon from "assets/icons/drawer/Dashboard_Inactive.png"
 import CompaniesIcon from "assets/icons/drawer/Companies_Active.png"
@@ -26,6 +22,7 @@ import EmployeesInactiveIcon from "assets/icons/drawer/Employees_Inactive.png"
 import FamilyMemberIcon from "assets/icons/drawer/Family_Member_Active.png"
 import FamilyMemberInactiveIcon from "assets/icons/drawer/Family_Member_Inactive.png"
 import LogoutIcon from "assets/icons/drawer/Logout.png"
+import UserContext from "context/user/UserContext"
 
 export const DrawerWidth = 240
 
@@ -88,7 +85,10 @@ const styles = (theme) => ({
     // border: `1px solid ${theme.custom.grey}`,
     fontSize: 14,
     borderRadius: 50,
-    cursor: "pointer"
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    gap: 20
   },
   footerIcon: {
     width: 18,
@@ -99,10 +99,10 @@ const styles = (theme) => ({
 function LayoutDrawer({ classes }) {
   const navigate = useNavigate()
   const location = useLocation()
-  // const { getUserRole } = useContext(userContext)
-  // const role = getUserRole()
-  const role = "Owner"
-  // const role = "Employee"
+    const userContext = useContext(UserContext)
+    const { getUserRole } = useContext(userContext)
+    const role = getUserRole()
+
 
   const DrawerItems = [
     {
@@ -131,16 +131,16 @@ function LayoutDrawer({ classes }) {
     }
   ]
 
-  // const logoutDrawerIcon = {
-  //   title: "Logout",
-  //   action: () => logout(),
-  //   route: "/login"
-  // }
+  const logoutDrawerIcon = {
+    title: "Logout",
+    action: () => logout(),
+    route: "/login",
+    icon: LogoutIcon
+  }
 
-  // function logout() {
-  //   removeFromStorage(keys.BRANCH)
-  //   userContext.logout()
-  // }
+  function logout() {
+    userContext.logout()
+  }
 
   function isSelected(route) {
     return route !== "/"
@@ -158,9 +158,8 @@ function LayoutDrawer({ classes }) {
       filteredIconsList = [...filteredIconsList, ...accessibleScreenIcons]
     })
 
-  // const drawerFooterItems = [logoutDrawerIcon]
+  const drawerFooterItems = [logoutDrawerIcon]
 
-  // return userContext.isAuthenticated() ? (
   return (
     <Drawer variant="permanent">
       <List className={classes.drawerList}>
@@ -189,7 +188,7 @@ function LayoutDrawer({ classes }) {
           </ListItem>
         ))}
       </List>
-      {/* <Grid container item xs={12} className={classes.footer}>
+      <Grid container item xs={12} className={classes.footer}>
         {drawerFooterItems.map((drawerFooterItem) => (
           <Tooltip
             arrow
@@ -206,15 +205,13 @@ function LayoutDrawer({ classes }) {
                 alt={drawerFooterItem.title}
                 className={classes.footerIcon}
               />
+              <Typography>{drawerFooterItem.title}</Typography>
             </Grid>
           </Tooltip>
         ))}
-      </Grid> */}
+      </Grid>
     </Drawer>
   )
-  // ) : (
-  //   <></>
-  // )
 }
 
 export default withStyles(styles)(LayoutDrawer)

@@ -1,8 +1,8 @@
-const OwnerAccessList = ["/dashboard", "/companies", "/employees"]
+const EmployerAccessList = ["/dashboard", "/companies", "/employees"]
 
 const EmployeeAccessList = ["/dashboard", "/family-members"]
 
 export const UserAccessControlList = {
-  Owner: OwnerAccessList,
-  Employee: EmployeeAccessList
+  employer: EmployerAccessList,
+  employee: EmployeeAccessList
 }

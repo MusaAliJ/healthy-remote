@@ -3,6 +3,9 @@ import morgan from "morgan"
 import cors from "cors"
 import { connect } from "./util/db"
 import companyRouter from "./company/companyRouter"
+import taskRouter from "./task/taskRouter"
+import taskCategoryRouter from "./taskCategory/taskCategoryRouter"
+
 import { signup, signin, protect } from "./util/auth"
 
 export const app = express()
@@ -19,6 +22,8 @@ app.post("/signin", signin)
 
 app.use("/api", protect)
 app.use("/api/company", companyRouter)
+app.use("/api/task", taskRouter)
+app.use("/api/taskCategory", taskCategoryRouter)
 
 export const start = async () => {
   try {
